@@ -187,7 +187,7 @@ export default function Profile(props) {
             name="user-circle"
             size={35}
             color="rgb(160, 90, 9)"
-            // onPress={() => setModalOpen(true)}
+            onPress={props.back}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
@@ -287,8 +287,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mediaImageContainer: {
-    backgroundColor: "rgba(247, 245, 243",
-    width: 250,
+    backgroundColor: "rgba(247, 245, 243)",
+    width: 280,
     height: 200,
     borderRadius: 12,
     overflow: "hidden",

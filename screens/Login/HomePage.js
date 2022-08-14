@@ -16,9 +16,15 @@ import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Profile from "../Profile/Profile";
+import Notifications from "../Notifications/Notifications";
+import Chat from "../Chat/Chat";
+import Search from "../Search/Search";
 
 const HomePage = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [notifyModalOpen, setNotifyModalOpen] = useState(false);
+  const [chatModalOpen, setChatModalOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   const edges = useSafeAreaInsets();
 
@@ -37,9 +43,19 @@ const HomePage = () => {
 
   return (
     <View style={styles.home_bg}>
-      <Modal visible={modalOpen} animationType="slide">
-        <Profile back={setModalOpen} />
+      <Modal visible={profileModalOpen} animationType="slide">
+        <Profile back={setProfileModalOpen} />
       </Modal>
+      <Modal visible={notifyModalOpen} animationType="slide">
+        <Notifications back={setNotifyModalOpen} />
+      </Modal>
+      <Modal visible={chatModalOpen} animationType="slide">
+        <Chat back={setChatModalOpen} />
+      </Modal>
+      <Modal visible={searchModalOpen} animationType="slide">
+        <Search back={setSearchModalOpen} />
+      </Modal>
+
       <View style={styles.navbar}>
         {/* <TouchableOpacity style={{ flex: 0 }}>
           <Icon name="user-circle" size={45} color="rgb(160, 90, 9)" />
@@ -108,7 +124,7 @@ const HomePage = () => {
                   name="ellipsis-v"
                   size={25}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
               </TouchableOpacity>
             </View>
@@ -164,7 +180,7 @@ const HomePage = () => {
                   name="clock-o"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -200,7 +216,7 @@ const HomePage = () => {
                   name="ellipsis-v"
                   size={25}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
               </TouchableOpacity>
             </View>
@@ -223,7 +239,7 @@ const HomePage = () => {
                   name="plus"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -240,7 +256,7 @@ const HomePage = () => {
                   name="smile-o"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -257,7 +273,7 @@ const HomePage = () => {
                   name="clock-o"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -293,7 +309,7 @@ const HomePage = () => {
                   name="ellipsis-v"
                   size={25}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
               </TouchableOpacity>
             </View>
@@ -316,7 +332,7 @@ const HomePage = () => {
                   name="plus"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -333,7 +349,7 @@ const HomePage = () => {
                   name="smile-o"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -350,7 +366,7 @@ const HomePage = () => {
                   name="clock-o"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -386,7 +402,7 @@ const HomePage = () => {
                   name="ellipsis-v"
                   size={25}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
               </TouchableOpacity>
             </View>
@@ -409,7 +425,7 @@ const HomePage = () => {
                   name="plus"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -426,7 +442,7 @@ const HomePage = () => {
                   name="smile-o"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -443,7 +459,7 @@ const HomePage = () => {
                   name="clock-o"
                   size={20}
                   color="rgb(160, 90, 9)"
-                  // onPress={() => setModalOpen(true)}
+                  // onPress={() => setProfileModalOpen(true)}
                 />
                 <Text
                   style={{
@@ -464,21 +480,36 @@ const HomePage = () => {
           <Icon name="home" size={40} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
-          <Icon name="search" size={35} color="rgb(160, 90, 9)" />
+          <Icon
+            name="search"
+            size={35}
+            color="rgb(160, 90, 9)"
+            onPress={() => setSearchModalOpen(true)}
+          />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
           <Icon
             name="user-circle"
             size={35}
             color="rgb(160, 90, 9)"
-            onPress={() => setModalOpen(true)}
+            onPress={() => setProfileModalOpen(true)}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
-          <Icon name="bell-o" size={35} color="rgb(160, 90, 9)" />
+          <Icon
+            name="bell-o"
+            size={35}
+            color="rgb(160, 90, 9)"
+            onPress={() => setNotifyModalOpen(true)}
+          />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 0 }}>
-          <Icon name="envelope-o" size={35} color="rgb(160, 90, 9)" />
+          <Icon
+            name="envelope-o"
+            size={35}
+            color="rgb(160, 90, 9)"
+            onPress={() => setChatModalOpen(true)}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -521,12 +552,13 @@ const styles = StyleSheet.create({
   },
   postContainer: {
     flex: 1,
-    backgroundColor: "rgba(247, 245, 243",
-    borderRadius: 20,
+    backgroundColor: "rgba(238, 214, 194, 0.201)",
+    borderRadius: 10,
     width: "99%",
     alignSelf: "center",
-    height: 360,
+    height: 350,
     padding: 4,
+    marginBottom: 3,
     // shadowColor: "#000",
     // shadowOffset: {
     //   width: 0,
@@ -565,8 +597,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   caption: {
+    width: "99%",
     marginTop: 2,
-    marginBottom: 2,
+    marginBottom: 3,
     paddingRight: 5,
     paddingLeft: 5,
   },
@@ -580,6 +613,7 @@ const styles = StyleSheet.create({
     width: "95%",
   },
   actions: {
+    width: "99%",
     padding: 5,
     flexDirection: "row",
   },
