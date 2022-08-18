@@ -10,7 +10,7 @@ import React from "react";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function Profile(props) {
+export default function Notifications(props) {
   return (
     <View style={styles.bg}>
       <View style={styles.titlebBar}>
@@ -797,7 +797,7 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     backgroundColor: "rgb(226, 214, 204)",
-    flex: 1,
+    margin: 3,
     width: 65,
     height: 65,
     borderRadius: 100,
@@ -816,14 +816,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   notificationContainer: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "row",
     backgroundColor: "rgba(238, 214, 194, 0.201)",
     borderRadius: 10,
     width: "98%",
-    height: 40,
+    height: 80,
     // alignSelf: "center",
-    height: 98,
     padding: 4,
     paddingBottom: 5,
     marginBottom: 2,

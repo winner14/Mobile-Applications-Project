@@ -24,7 +24,7 @@
 //   },
 // });
 
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -33,14 +33,33 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
 import HomePage from "../Login/HomePage";
+import Notifications from "../Notifications/Notifications";
+import Search from "../Search/Search";
+import Chat from "../Chat/Chat";
 
 export default function Profile(props) {
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [notifyModalOpen, setNotifyModalOpen] = useState(false);
+  const [chatModalOpen, setChatModalOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [vNavModalOpen, setVNavModalOpen] = useState(false);
+
   return (
     <View style={styles.container}>
+      <Modal visible={notifyModalOpen} animationType="slide">
+        <Notifications back={setNotifyModalOpen} />
+      </Modal>
+      <Modal visible={searchModalOpen} animationType="slide">
+        <Search back={setSearchModalOpen} />
+      </Modal>
+      <Modal visible={chatModalOpen} animationType="slide">
+        <Chat back={setChatModalOpen} />
+      </Modal>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* <View style={styles.titleBar}>
           <TouchableOpacity style={{ flex: 1 }}>
@@ -179,9 +198,12 @@ export default function Profile(props) {
             onPress={props.back}
           />
         </View>
-        <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => setSearchModalOpen(true)}
+        >
           <Icon name="search" size={35} color="rgb(160, 90, 9)" />
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
           <Icon
             name="user-circle"
@@ -190,10 +212,16 @@ export default function Profile(props) {
             onPress={props.back}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => setNotifyModalOpen(true)}
+        >
           <Icon name="bell-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 0 }}>
+        <TouchableOpacity
+          style={{ flex: 0 }}
+          onPress={() => setChatModalOpen(true)}
+        >
           <Icon name="envelope-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
       </View>

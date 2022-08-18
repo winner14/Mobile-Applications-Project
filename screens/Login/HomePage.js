@@ -19,12 +19,14 @@ import Profile from "../Profile/Profile";
 import Notifications from "../Notifications/Notifications";
 import Chat from "../Chat/Chat";
 import Search from "../Search/Search";
+import DrawerBar from "../Drawer/DrawerBar";
 
 const HomePage = () => {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [notifyModalOpen, setNotifyModalOpen] = useState(false);
   const [chatModalOpen, setChatModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [vNavModalOpen, setVNavModalOpen] = useState(false);
 
   const edges = useSafeAreaInsets();
 
@@ -55,6 +57,14 @@ const HomePage = () => {
       <Modal visible={searchModalOpen} animationType="slide">
         <Search back={setSearchModalOpen} />
       </Modal>
+      <Modal
+        visible={vNavModalOpen}
+        // transparent={vNavModalOpen}
+        animationType="slide"
+        transparent
+      >
+        <DrawerBar back={setVNavModalOpen} />
+      </Modal>
 
       <View style={styles.navbar}>
         {/* <TouchableOpacity style={{ flex: 0 }}>
@@ -79,7 +89,10 @@ const HomePage = () => {
             MiJO
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 0, margin: 5 }}>
+        <TouchableOpacity
+          style={{ flex: 0, margin: 5 }}
+          onPress={() => setVNavModalOpen(true)}
+        >
           <Icon name="navicon" size={45} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
       </View>
