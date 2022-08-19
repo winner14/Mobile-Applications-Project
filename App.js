@@ -11,6 +11,10 @@ import Register from "./screens/Register/Register";
 import Landing from "./screens/Landing/Landing";
 import React from "react";
 import AppLoading from "expo-app-loading";
+import Chat from "./screens/Chat/Chat";
+import Profile from "./screens/Profile/Profile";
+import Notifications from "./screens/Notifications/Notifications";
+import Search from "./screens/Search/Search";
 
 // import * as firebase from "firebase";
 // const firebaseConfig = {
@@ -69,6 +73,11 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* <StatusBar
+        backgroundColor="rgb(238, 218, 202)"
+        barStyle="light-content"
+        hidden={false}
+      /> */}
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -77,10 +86,35 @@ export default function App() {
             component={Login}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
             name="home"
             component={HomePage}
           />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="chat"
+            component={Chat}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="profile"
+            component={Profile}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="notifications"
+            component={Notifications}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="search"
+            component={Search}
+          />
+          {/* <Stack.Screen
+            options={{ headerShown: false }}
+            name="matches"
+            component={}
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

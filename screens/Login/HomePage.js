@@ -15,20 +15,10 @@ import { initializeApp } from "firebase/app";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Profile from "../Profile/Profile";
-import Notifications from "../Notifications/Notifications";
-import Chat from "../Chat/Chat";
-import Search from "../Search/Search";
 import DrawerBar from "../Drawer/DrawerBar";
 
-const HomePage = () => {
-  const [profileModalOpen, setProfileModalOpen] = useState(false);
-  const [notifyModalOpen, setNotifyModalOpen] = useState(false);
-  const [chatModalOpen, setChatModalOpen] = useState(false);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
+const HomePage = (props) => {
   const [vNavModalOpen, setVNavModalOpen] = useState(false);
-
-  const edges = useSafeAreaInsets();
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -45,31 +35,11 @@ const HomePage = () => {
 
   return (
     <View style={styles.home_bg}>
-      <Modal visible={profileModalOpen} animationType="slide">
-        <Profile back={setProfileModalOpen} />
-      </Modal>
-      <Modal visible={notifyModalOpen} animationType="slide">
-        <Notifications back={setNotifyModalOpen} />
-      </Modal>
-      <Modal visible={chatModalOpen} animationType="slide">
-        <Chat back={setChatModalOpen} />
-      </Modal>
-      <Modal visible={searchModalOpen} animationType="slide">
-        <Search back={setSearchModalOpen} />
-      </Modal>
-      <Modal
-        visible={vNavModalOpen}
-        // transparent={vNavModalOpen}
-        animationType="slide"
-        transparent
-      >
+      <Modal visible={vNavModalOpen} animationType="" transparent>
         <DrawerBar back={setVNavModalOpen} />
       </Modal>
 
       <View style={styles.navbar}>
-        {/* <TouchableOpacity style={{ flex: 0 }}>
-          <Icon name="user-circle" size={45} color="rgb(160, 90, 9)" />
-        </TouchableOpacity> */}
         <TouchableOpacity
           style={{
             flex: 1,
@@ -96,23 +66,6 @@ const HomePage = () => {
           <Icon name="navicon" size={45} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
       </View>
-      {/* <TouchableOpacity
-        style={{
-          backgroundColor: "rgba(121, 58, 7, 0.827)",
-          borderRadius: 5,
-          marginTop: 15,
-          width: "50%",
-          height: 50,
-          fontWeight: "bold",
-          alignSelf: "center",
-          justifyContent: "center",
-        }}
-        onPress={handleSignOut}
-      >
-        <Text style={{ fontSize: 30, fontWeight: "bold", alignSelf: "center" }}>
-          Sign Out
-        </Text>
-      </TouchableOpacity> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.feed}>
           <View style={styles.postContainer}>
@@ -497,7 +450,7 @@ const HomePage = () => {
             name="search"
             size={35}
             color="rgb(160, 90, 9)"
-            onPress={() => setSearchModalOpen(true)}
+            onPress={() => navigation.navigate("search")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
@@ -505,7 +458,7 @@ const HomePage = () => {
             name="user-circle"
             size={35}
             color="rgb(160, 90, 9)"
-            onPress={() => setProfileModalOpen(true)}
+            onPress={() => navigation.navigate("profile")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
@@ -513,7 +466,7 @@ const HomePage = () => {
             name="bell-o"
             size={35}
             color="rgb(160, 90, 9)"
-            onPress={() => setNotifyModalOpen(true)}
+            onPress={() => navigation.navigate("notifications")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 0 }}>
@@ -521,7 +474,7 @@ const HomePage = () => {
             name="envelope-o"
             size={35}
             color="rgb(160, 90, 9)"
-            onPress={() => setChatModalOpen(true)}
+            onPress={() => navigation.navigate("chat")}
           />
         </TouchableOpacity>
       </View>

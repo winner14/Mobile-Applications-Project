@@ -30,29 +30,12 @@ export default function DrawerBar(props) {
   //   const [notifyModalOpen, setNotifyModalOpen] = useState(false);
   const [chatModalOpen, setChatModalOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  //   const [vNavModalOpen, setVNavModalOpen] = useState(false);
+  const [vNavModalOpen, setVNavModalOpen] = useState(false);
 
   return (
     <View style={styles.bg}>
-      <Modal visible={profileModalOpen} animationType="slide">
-        <Profile back={setProfileModalOpen} />
-      </Modal>
-      <Modal visible={searchModalOpen} animationType="slide">
-        <Search back={setSearchModalOpen} />
-      </Modal>
-      <Modal visible={chatModalOpen} animationType="slide">
-        <Chat back={setChatModalOpen} />
-      </Modal>
-
       <TouchableOpacity style={styles.drawBackdrop} onPress={props.back} />
       <View style={styles.drawMenu}>
-        {/* <Text>vfbinn</Text>
-        <TouchableOpacity
-          onPress={props.back}
-          style={{ width: "60%", borderWidth: 1, marginBottom: 30 }}
-        >
-          <Text style={{ alignSelf: "center", fontSize: 25 }}>Back</Text>
-        </TouchableOpacity> */}
         <View>
           <View style={styles.profileName}>
             <TouchableOpacity style={styles.profileImage}>
@@ -99,7 +82,10 @@ export default function DrawerBar(props) {
           <View style={styles.drawActions}>
             <TouchableOpacity
               style={styles.drawAction}
-              onPress={() => [setProfileModalOpen(true), props.back]}
+              onPress={() => {
+                props.back;
+                navigation.navigate("profile");
+              }}
             >
               <Text style={{ fontSize: 18, fontWeight: "500" }}>
                 View Profile
@@ -107,7 +93,7 @@ export default function DrawerBar(props) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.drawAction}
-              onPress={() => setSearchModalOpen(true)}
+              // onPress={() => [props.back, setSearchModalOpen(true)]}
             >
               <Text style={{ fontSize: 18, fontWeight: "400" }}>
                 Find Matches
@@ -115,7 +101,7 @@ export default function DrawerBar(props) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.drawAction}
-              onPress={() => setChatModalOpen(true)}
+              onPress={() => navigation.navigate("chat")}
             >
               <Text style={{ fontSize: 18, fontWeight: "400" }}>Messages</Text>
             </TouchableOpacity>

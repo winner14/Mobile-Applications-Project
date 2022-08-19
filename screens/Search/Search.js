@@ -1,5 +1,6 @@
 import {
   Image,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -7,10 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator;
 
 export default function Search(props) {
+  const navigation = useNavigation();
   return (
     <View style={styles.bg}>
       <View style={styles.titleBar}>
@@ -28,13 +34,6 @@ export default function Search(props) {
             borderWidth: 0.5,
             borderRadius: 30,
           }}
-          //   right={
-          //     <Icon
-          //       name={() => (
-          //         <Icon name={"eye"} size={20} color={"rgba(0, 0, 0, 0.729)"} />
-          //       )}
-          //     />
-          //   }
         />
         <TouchableOpacity style={{ flex: 0, margin: 10, marginLeft: -40 }}>
           <Icon name="search" size={30} color="rgb(160, 90, 9)" />
@@ -382,23 +381,21 @@ export default function Search(props) {
       </View>
 
       <View style={styles.footer}>
-        <TouchableOpacity style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => navigation.navigate("home")}
+        >
           <Icon name="home" size={40} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
-          <Icon
-            name="search"
-            size={35}
-            color="rgb(160, 90, 9)"
-            onPress={props.back}
-          />
+          <Icon name="search" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
           <Icon
             name="user-circle"
             size={35}
             color="rgb(160, 90, 9)"
-            // onPress={() => setProfileModalOpen(true)}
+            onPress={() => navigation.navigate("profile")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
@@ -406,7 +403,7 @@ export default function Search(props) {
             name="bell-o"
             size={35}
             color="rgb(160, 90, 9)"
-            // onPress={() => setNotifyModalOpen(true)}
+            onPress={() => navigation.navigate("notifications")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 0 }}>
@@ -414,7 +411,7 @@ export default function Search(props) {
             name="envelope-o"
             size={35}
             color="rgb(160, 90, 9)"
-            // onPress={() => setChatModalOpen(true)}
+            onPress={() => navigation.navigate("chat")}
           />
         </TouchableOpacity>
       </View>

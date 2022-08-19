@@ -1,5 +1,12 @@
-import React, { useEffect } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import { TextInput, Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -40,23 +47,22 @@ export default function Register(props) {
       .catch((error) => alert.message);
   };
 
+  const [isChecked, setCheck] = useState(false);
+
   return (
     <View style={styles.modal_bg}>
       <KeyboardAvoidingView style={styles.form_container}>
         <View
-          style={{ alignContent: "center", flexDirection: "row", width: "90%" }}
+          style={{ alignContent: "center", flexDirection: "row", width: "98%" }}
         >
-          <View style={{ flex: 4 }}>
+          <View style={{ flex: 1 }}>
             <Text style={styles.top_text}>Register</Text>
-            <Text style={styles.top_text_small}>
-              Fill the form to create an account
-            </Text>
           </View>
           <Icon
             name="close"
             size={40}
             color="#000"
-            style={{ marginRight: -10 }}
+            style={{ flex: 0 }}
             onPress={props.cancel}
           />
         </View>
@@ -197,34 +203,100 @@ export default function Register(props) {
           />
         </View>
         <View style={styles.agree_box}>
-          <CheckBox
+          {/* <CheckBox
             style={styles.agree}
-            onClick={() => {
-              console.log("Clicked");
-            }}
-            //   isChecked={this.state.isChecked}
-            rightText={
-              "I have read and agreed to the Terms of Use and Privacy Policy."
-            }
+            // onClick={() => {
+            //   {
+            //     Color = "#000";
+            //   }
+            // }}
+            onValueChange={setSelection}
+            value={isSelected}
+          /> */}
+          <BouncyCheckbox
+            onPress={setCheck}
+            fillColor="black"
+            style={{ marginRight: -10 }}
           />
+          <Text style={{ justifyContent: "center", fontSize: 15 }}>
+            I have read and agreed to the
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: "rgba(45, 1, -35, 1)",
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  marginTop: 6,
+                }}
+              >
+                {" "}
+                Terms of Use{" "}
+              </Text>
+            </TouchableOpacity>
+            and
+            <TouchableOpacity style={{ justifyContent: "center" }}>
+              <Text
+                style={{
+                  color: "rgba(45, 1, -35, 1)",
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  // marginTop: 6,
+                }}
+              >
+                {" "}
+                Privacy Policy.
+              </Text>
+            </TouchableOpacity>
+          </Text>
         </View>
-        <View style={{ width: "90%" }}>
-          <Button
-            mode="contained"
+        <View
+          style={{
+            marginTop: 10,
+            width: "98%",
+            flexDirection: "row",
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
+          <TouchableOpacity
+            style={{ flex: 1, flexDirection: "column" }}
+            onPress={props.cancel}
+          >
+            <Text style={{ fontSize: 17 }}>Already have an Account?</Text>
+            {/* <View
+              style={{
+                // alignContent: "center",
+                // justifyContent: "center",
+                
+              }}
+            > */}
+            <Text
+              style={{
+                color: "rgba(45, 1, -35, 1)",
+                fontSize: 17,
+                fontWeight: "bold",
+                marginLeft: 8,
+              }}
+            >
+              Login
+            </Text>
+            {/* </View> */}
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
+              flex: 0,
               backgroundColor: "rgba(121, 58, 7, 0.827)",
               borderRadius: 5,
-              marginTop: 15,
-              width: "40%",
+              width: 90,
               height: 45,
               fontSize: 50,
-              fontWeight: "bold",
-              alignSelf: "flex-end",
+              justifyContent: "center",
+              alignItems: "center",
             }}
             onPress={handleRegister}
           >
             <Text style={{ fontSize: 25, fontWeight: "bold" }}>Done</Text>
-          </Button>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </View>
@@ -235,23 +307,29 @@ const styles = StyleSheet.create({
   modal_bg: {
     flex: 1,
     backgroundColor: "rgba(243, 237, 232, 0.4)",
+    alignContent: "center",
+    alignItems: "center",
     width: "100%",
     top: 20,
   },
   form_container: {
     top: 20,
+    alignContent: "center",
+    // alignItems: "center",
+    alignSelf: "center",
   },
   input_box: {
     backgroundColor: "rgb(238, 218, 202)",
-    width: "90%",
+    width: "98%",
     alignSelf: "center",
     borderRadius: 10,
     borderWidth: 0,
-    marginBottom: 2,
-    marginTop: 2,
+    // marginBottom: 2,
+    marginTop: 3,
   },
   top_text: {
-    width: "90%",
+    width: "98%",
+    marginBottom: 5,
     alignSelf: "center",
     fontWeight: "bold",
     fontSize: 35,
@@ -263,7 +341,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   agree_box: {
-    width: "90%",
+    flexDirection: "row",
+    // justifyContent: "center",
+    // alignContent: "center",
+    alignItems: "center",
+    width: "98%",
     alignSelf: "center",
     marginTop: 5,
   },

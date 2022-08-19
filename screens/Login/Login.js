@@ -8,6 +8,7 @@ import {
   Modal,
   KeyboardAvoidingView,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -69,6 +70,8 @@ export default function Login() {
   //     });
   // };
 
+  const invalidLogin = "Invalid login details";
+
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -78,8 +81,8 @@ export default function Login() {
         <HomePage />;
       })
       .catch((error) => {
-        console.log(error);
-        Alert.alert(error.message);
+        console.log(invalidLogin);
+        Alert.alert(invalidLogin);
       });
   };
 
@@ -195,40 +198,52 @@ export default function Login() {
                 }
               />
             </View>
-            <Button
-              mode="contained"
+            <TouchableOpacity
               style={{
                 backgroundColor: "rgba(121, 58, 7, 0.827)",
                 width: 270,
-                marginTop: 10,
-                marginBottom: 20,
-                borderWidth: 1.5,
+                height: 45,
+                marginTop: 5,
+                marginBottom: 10,
+                borderWidth: 0.5,
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
                 borderColor: "rgba(85, 41, 5, 0.849)",
               }}
               onPress={handleSignIn}
             >
-              Login
-            </Button>
-            <View
-              style={{
-                backgroundColor: "rgba(189, 118, 59, 0.327)",
-                alignContent: "center",
-                borderRadius: 5,
-                borderWidth: 1.5,
-                borderColor: "rgba(85, 41, 5, 0.849)",
-              }}
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={() => setModalOpen(true)}
             >
-              <Button onPress={() => setModalOpen(true)}>
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                New User?
+              </Text>
+              <View
+                style={{
+                  // backgroundColor: "rgba(189, 118, 59, 0.327)",
+                  alignContent: "center",
+                  justifyContent: "center",
+                  marginLeft: 8,
+                  // borderRadius: 5,
+                  // borderWidth: 1.5,
+                  // borderColor: "rgba(85, 41, 5, 0.849)",
+                }}
+              >
                 <Text
                   style={{
-                    color: "rgb(27, 14, 2)",
+                    color: "rgba(45, 1, -35, 1)",
+                    fontSize: 16,
                     fontWeight: "bold",
                   }}
                 >
-                  New to MiJO? Register now
+                  Register now
                 </Text>
-              </Button>
-            </View>
+              </View>
+            </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </ImageBackground>

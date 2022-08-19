@@ -9,8 +9,10 @@ import {
 import React from "react";
 
 import Icon from "react-native-vector-icons/FontAwesome";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Notifications(props) {
+  const navigation = useNavigation();
   return (
     <View style={styles.bg}>
       <View style={styles.titlebBar}>
@@ -748,13 +750,22 @@ export default function Notifications(props) {
         </View>
       </ScrollView>
       <View style={styles.footer}>
-        <TouchableOpacity style={{ flex: 1 }} onPress={props.back}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => navigation.navigate("home")}
+        >
           <Icon name="home" size={40} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => navigation.navigate("search")}
+        >
           <Icon name="search" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => navigation.navigate("profile")}
+        >
           <Icon
             name="user-circle"
             size={35}
@@ -763,14 +774,12 @@ export default function Notifications(props) {
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
-          <Icon
-            name="bell-o"
-            size={35}
-            color="rgb(160, 90, 9)"
-            onPress={props.back}
-          />
+          <Icon name="bell-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 0 }}>
+        <TouchableOpacity
+          style={{ flex: 0 }}
+          onPress={() => navigation.navigate("chat")}
+        >
           <Icon name="envelope-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
       </View>

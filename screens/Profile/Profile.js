@@ -1,29 +1,3 @@
-// import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-// import React from "react";
-
-// export default function Profile(props) {
-//   return (
-//     <View style={styles.bg}>
-//       <Text style={{ flex: 1, fontSize: 25, top: 50 }}>Profile</Text>
-//       <TouchableOpacity
-//         onPress={props.back}
-//         style={{ width: "60%", borderWidth: 1, marginBottom: 30 }}
-//       >
-//         <Text style={{ alignSelf: "center", fontSize: 25 }}>Back</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   bg: {
-//     flex: 1,
-//     flexDirection: "column",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
-
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -41,46 +15,19 @@ import HomePage from "../Login/HomePage";
 import Notifications from "../Notifications/Notifications";
 import Search from "../Search/Search";
 import Chat from "../Chat/Chat";
+import { useNavigation } from "@react-navigation/native";
+import DrawerBar from "../Drawer/DrawerBar";
 
 export default function Profile(props) {
-  const [profileModalOpen, setProfileModalOpen] = useState(false);
-  const [notifyModalOpen, setNotifyModalOpen] = useState(false);
-  const [chatModalOpen, setChatModalOpen] = useState(false);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [vNavModalOpen, setVNavModalOpen] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <Modal visible={notifyModalOpen} animationType="slide">
-        <Notifications back={setNotifyModalOpen} />
-      </Modal>
-      <Modal visible={searchModalOpen} animationType="slide">
-        <Search back={setSearchModalOpen} />
-      </Modal>
-      <Modal visible={chatModalOpen} animationType="slide">
-        <Chat back={setChatModalOpen} />
+      <Modal visible={vNavModalOpen} animationType="" transparent>
+        <DrawerBar back={setVNavModalOpen} />
       </Modal>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.titleBar}>
-          <TouchableOpacity style={{ flex: 1 }}>
-            <Icon
-              name="user-circle"
-              size={35}
-              color="rgb(160, 90, 9)"
-              onPress={() => setModalOpen(true)}
-            />
-          </TouchableOpacity> */}
-        {/* <View style={styles.titleBar}>
-          <TouchableOpacity style={{ flex: 0, margin: 5 }}>
-            <Icon
-              name="ellipsis-v"
-              size={30}
-              color="rgb(160, 90, 9)"
-              onPress={() => setModalOpen(true)}
-            />
-          </TouchableOpacity>
-        </View> */}
-
         <View style={{ flex: 1, flexDirection: "row", margin: 5 }}>
           <TouchableOpacity style={styles.profileImage}>
             <Image
@@ -195,32 +142,27 @@ export default function Profile(props) {
             name="home"
             size={40}
             color="rgb(160, 90, 9)"
-            onPress={props.back}
+            onPress={() => navigation.navigate("home")}
           />
         </View>
         <TouchableOpacity
           style={{ flex: 1 }}
-          onPress={() => setSearchModalOpen(true)}
+          onPress={() => navigation.navigate("search")}
         >
           <Icon name="search" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>
-          <Icon
-            name="user-circle"
-            size={35}
-            color="rgb(160, 90, 9)"
-            onPress={props.back}
-          />
+          <Icon name="user-circle" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flex: 1 }}
-          onPress={() => setNotifyModalOpen(true)}
+          onPress={() => navigation.navigate("notifications")}
         >
           <Icon name="bell-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flex: 0 }}
-          onPress={() => setChatModalOpen(true)}
+          onPress={() => navigation.navigate("chat")}
         >
           <Icon name="envelope-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
@@ -320,7 +262,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 12,
     overflow: "hidden",
-    marginHorizontal: 5,
+    marginHorizontal: 3,
   },
   mediaCount: {
     backgroundColor: "#41444B",
