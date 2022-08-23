@@ -506,7 +506,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     // paddingBottom: 5,
-    marginBottom: 5,
+    marginBottom: 1,
   },
   feed: {
     flex: 1,

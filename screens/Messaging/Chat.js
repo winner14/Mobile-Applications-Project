@@ -13,7 +13,12 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { Bubble, GiftedChat, InputToolbar } from "react-native-gifted-chat";
+import {
+  Actions,
+  Bubble,
+  GiftedChat,
+  InputToolbar,
+} from "react-native-gifted-chat";
 import Search from "../Search";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
@@ -21,6 +26,7 @@ import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebase-config";
 import { getAuth } from "firebase/auth";
 import { Avatar } from "react-native-elements";
+import DocumentPicker, { types } from "react-native-document-picker";
 import {
   collection,
   addDoc,
@@ -31,698 +37,69 @@ import {
 } from "firebase/firestore";
 
 export default function Chat(props) {
-  // const [searchModalOpen, setSearchModalOpen] = useState(false);
-  // return (
-  //   <View style={styles.bg}>
-  //     {/* <Text style={{ flex: 1, fontSize: 25, top: 50 }}>Chat</Text>
-  //     <TouchableOpacity
-  //       onPress={props.back}
-  //       style={{ width: "60%", borderWidth: 1, marginBottom: 30 }}
-  //     >
-  //       <Text
-  //         style={{ alignSelf: "center", fontSize: 25 }}
-  //         onPress={() => navigation.navigate("chat")}
-  //       >
-  //         Back
-  //       </Text>
-  //     </TouchableOpacity> */}
-  //     <View style={styles.navbar}>
-  //       <TouchableOpacity
-  //         style={{
-  //           flex: 1,
-  //         }}
-  //       >
-  //         <Text
-  //           style={{
-  //             fontSize: 35,
-  //             fontWeight: "bold",
-  //             color: "rgb(160, 90, 9)",
-  //           }}
-  //         >
-  //           Chats
-  //         </Text>
-  //       </TouchableOpacity>
-  //       <TouchableOpacity
-  //         style={{
-  //           flex: 0,
-  //           margin: 5,
-  //           alignContent: "center",
-  //           justifyContent: "center",
-  //         }}
-  //         // onPress={() => setVNavModalOpen(true)}
-  //       >
-  //         <Icon name="search" size={32} color="rgb(160, 90, 9)" />
-  //       </TouchableOpacity>
-  //     </View>
-  //     <View style={styles.msgScreen}>
-  //       <ScrollView
-  //         showsVerticalScrollIndicator={false}
-  //         style={{
-  //           marginBottom: 15,
-  //           backgroundColor: "rgba(247, 245, 243)",
-  //           width: "100%",
-  //           alignContent: "center",
-  //         }}
-  //       >
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 John
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 2mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Hi👋
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Elsie
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 2mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 We need to talk
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Kofi Johnson
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 3mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Hello... How are you doing?😀
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Mom
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 3mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Where are you?
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Emma
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 5mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Hey👀 Call me ASAP!
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Lucy
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 15mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 I'm home alone😪
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 John
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 2mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Hi👋
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Elsie
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 2mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 We need to talk
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Kofi Johnson
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 3mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Hello... How are you doing?😀
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Mom
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 3mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Where are you?
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Emma
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 5mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 Hey👀 Call me ASAP!
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //         <TouchableOpacity style={styles.chatBar}>
-  //           <TouchableOpacity style={styles.profileImage}>
-  //             <Image
-  //               source={require("../assets/prof.jpg")}
-  //               style={styles.image}
-  //               resizeMode="cover"
-  //             ></Image>
-  //           </TouchableOpacity>
-  //           <View
-  //             style={{
-  //               paddingLeft: 2,
-  //               margin: 2,
-  //               flexDirection: "column",
-  //               flex: 5.5,
-  //             }}
-  //           >
-  //             <View
-  //               style={{
-  //                 flexDirection: "row",
-  //                 flex: 1,
-  //                 marginBottom: 10,
-  //               }}
-  //             >
-  //               <Text
-  //                 style={{
-  //                   fontSize: 28,
-  //                   fontWeight: "600",
-  //                   flex: 1,
-  //                   color: "rgba(0, 0, 0, 0.85)",
-  //                 }}
-  //                 numberOfLines={1}
-  //                 ellipsizeMode="tail"
-  //               >
-  //                 Lucy
-  //               </Text>
-  //               <Text
-  //                 style={{
-  //                   flex: 0,
-  //                   color: "rgba(32, 21, 9, 0.465)",
-  //                   paddingLeft: 10,
-  //                   fontSize: 18,
-  //                 }}
-  //               >
-  //                 15mins ago
-  //               </Text>
-  //             </View>
-  //             <View style={{ flex: 1, marginLeft: 5 }}>
-  //               <Text numberOfLines={1} ellipsizeMode="tail">
-  //                 I'm home alone😪
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </TouchableOpacity>
-  //       </ScrollView>
-  //     </View>
-  //   </View>
+  const [messages, setMessages] = useState([]);
+
+  const handleDocumentSelection = useCallback(async () => {
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: "fullScreen",
+        type: [DocumentPicker.types.pdf],
+      });
+      setFileResponse(response);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, []);
+
+  const renderActions = (props) => {
+    return (
+      <Actions
+        {...props}
+        options={{
+          ["Document"]: async (props) => {
+            try {
+              handleDocumentSelection;
+            } catch (e) {
+              if (DocumentPicker.isCancel(e)) {
+                console.log("User cancelled!");
+              } else {
+                throw e;
+              }
+            }
+          },
+          Cancel: (props) => {
+            console.log("Cancel");
+          },
+        }}
+        onSend={(args) => console.log(args)}
+      />
+    );
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <View style={{ marginLeft: 20 }}>
+          <Avatar
+            rounded
+            source={{
+              source: require("../../assets/prof.jpg"),
+            }}
+          />
+        </View>
+      ),
+      // headerRight: () => (
+      //   <TouchableOpacity
+      //     style={{
+      //       marginRight: 10,
+      //     }}
+      //     onPress={signOutNow}
+      //   >
+      //     <Text>logout</Text>
+      //   </TouchableOpacity>
+      // ),
+    });
+  });
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -730,7 +107,7 @@ export default function Chat(props) {
 
   const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
 
   const customtInputToolbar = (props) => {
     return (
@@ -740,7 +117,10 @@ export default function Chat(props) {
           backgroundColor: "white",
           borderTopColor: "rgba(236, 201, 174, 0.7)",
           borderTopWidth: 1,
-          borderRadius: 5,
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+          // borderBottomLeftRadius: 10,
+          // borderBottomRightRadius: 10,
           padding: 3,
         }}
       />
@@ -767,8 +147,9 @@ export default function Chat(props) {
           right: {
             borderTopLeftRadius: 20,
             borderTopRightRadius: 0,
-            borderBottomLeftRadius: 20,
-            borderBottomRightRadius: 5,
+            borderBottomLeftRadius: 5,
+            borderBottomRightRadius: 20,
+            padding: 3,
             backgroundColor: "rgb(241, 181, 131)",
           },
           left: {
@@ -776,7 +157,10 @@ export default function Chat(props) {
             borderTopRightRadius: 20,
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 5,
-            backgroundColor: "rgb(241, 181, 131)",
+            padding: 2,
+            borderWidth: 1.2,
+            borderColor: "rgb(241, 181, 131)",
+            backgroundColor: "rgb(241, 211, 187)",
           },
         }}
         containerToPreviousStyle={{
@@ -836,7 +220,8 @@ export default function Chat(props) {
               color: "rgb(160, 90, 9)",
             }}
           >
-            Winner
+            {/* {props.name} */}
+            Chat
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -856,6 +241,7 @@ export default function Chat(props) {
           messages={messages}
           showAvatarForEveryMessage={true}
           onSend={(messages) => onSend(messages)}
+          renderActions={(props) => renderActions(props)}
           user={{
             _id: auth?.currentUser?.email,
             name: auth?.currentUser?.displayName,
@@ -891,7 +277,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     // paddingBottom: 5,
-    marginBottom: 5,
+    marginBottom: 1,
   },
   msgScreen: {
     flex: 0,

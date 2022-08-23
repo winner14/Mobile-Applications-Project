@@ -15,6 +15,7 @@ import Chat from "./screens/Messaging/Chat";
 import Profile from "./screens/Profile";
 import Notifications from "./screens/Notifications";
 import Search from "./screens/Search";
+import ChatList from "./screens/Messaging/ChatList";
 
 // import * as firebase from "firebase";
 // const firebaseConfig = {
@@ -89,6 +90,11 @@ export default function App() {
             options={{ headerShown: false, gestureEnabled: false }}
             name="home"
             component={HomePage}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="chatkk"
+            component={ChatList}
           />
           <Stack.Screen
             options={{ headerShown: false }}
