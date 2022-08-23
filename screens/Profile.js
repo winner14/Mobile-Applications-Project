@@ -14,7 +14,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import HomePage from "./HomePage";
 import Notifications from "./Notifications";
 import Search from "./Search";
-import Chat from "./Chat";
+import Chat from "./Messaging/Chat";
 import { useNavigation } from "@react-navigation/native";
 import DrawerBar from "./DrawerBar";
 

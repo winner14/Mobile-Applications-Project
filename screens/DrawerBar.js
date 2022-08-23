@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { firebaseConfig } from "../firebase-config";
 import Search from "./Search";
-import Chat from "./Chat";
+import Chat from "./Messaging/Chat";
 import Profile from "./Profile";
 
 export default function DrawerBar(props) {

@@ -13,12 +13,12 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
-import { GiftedChat } from "react-native-gifted-chat";
-import Search from "./Search";
+import { Bubble, GiftedChat, InputToolbar } from "react-native-gifted-chat";
+import Search from "../Search";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase-config";
+import { firebaseConfig } from "../../firebase-config";
 import { getAuth } from "firebase/auth";
 import { Avatar } from "react-native-elements";
 import {
@@ -731,16 +731,70 @@ export default function Chat(props) {
   const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
   const [messages, setMessages] = useState([]);
-  const signOutNow = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        navigation.replace("Login");
-      })
-      .catch((error) => {
-        // An error happened.
-      });
+
+  const customtInputToolbar = (props) => {
+    return (
+      <InputToolbar
+        {...props}
+        containerStyle={{
+          backgroundColor: "white",
+          borderTopColor: "rgba(236, 201, 174, 0.7)",
+          borderTopWidth: 1,
+          borderRadius: 5,
+          padding: 3,
+        }}
+      />
+    );
   };
+
+  const customSystemMessage = (props) => {
+    return (
+      <View style={styles.ChatMessageSytemMessageContainer}>
+        <Icon name="lock" color="#9d9d9d" size={16} />
+        <Text style={styles.ChatMessageSystemMessageText}>
+          Your chat is secured. Remember to be cautious about what you share
+          with others.
+        </Text>
+      </View>
+    );
+  };
+
+  const renderBubble = (props) => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          right: {
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 0,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 5,
+            backgroundColor: "rgb(241, 181, 131)",
+          },
+          left: {
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 20,
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 5,
+            backgroundColor: "rgb(241, 181, 131)",
+          },
+        }}
+        containerToPreviousStyle={{
+          right: { borderTopRightRadius: 15 },
+          left: { borderTopLeftRadius: 15 },
+        }}
+        containerToNextStyle={{
+          right: { borderTopRightRadius: 15 },
+          left: { borderTopLeftRadius: 15 },
+        }}
+        containerStyle={{
+          right: { borderTopRightRadius: 15 },
+          left: { borderTopLeftRadius: 15 },
+        }}
+      />
+    );
+  };
+
   useLayoutEffect(() => {
     const q = query(collection(db, "chats"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) =>
@@ -757,44 +811,8 @@ export default function Chat(props) {
     return () => {
       unsubscribe();
     };
-    navigation.setOptions({
-      headerLeft: () => (
-        <View style={{ marginLeft: 20 }}>
-          <Avatar
-            rounded
-            source={{
-              uri: auth?.currentUser?.photoURL,
-            }}
-          />
-        </View>
-      ),
-      headerRight: () => (
-        <TouchableOpacity
-          style={{
-            marginRight: 10,
-          }}
-          onPress={signOutNow}
-        >
-          <Text>logout</Text>
-        </TouchableOpacity>
-      ),
-    });
   }, [navigation]);
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-    ]);
-  }, []);
   const onSend = useCallback((messages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
@@ -804,16 +822,52 @@ export default function Chat(props) {
     addDoc(collection(db, "chats"), { _id, createdAt, text, user });
   }, []);
   return (
-    <GiftedChat
-      messages={messages}
-      showAvatarForEveryMessage={true}
-      onSend={(messages) => onSend(messages)}
-      user={{
-        _id: auth?.currentUser?.email,
-        name: auth?.currentUser?.displayName,
-        avatar: auth?.currentUser?.photoURL,
-      }}
-    />
+    <View style={styles.bg}>
+      <View style={styles.navbar}>
+        <TouchableOpacity
+          style={{
+            flex: 1,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 35,
+              fontWeight: "bold",
+              color: "rgb(160, 90, 9)",
+            }}
+          >
+            Winner
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flex: 0,
+            margin: 2,
+            // alignContent: "center",
+            // justifyContent: "center",
+          }}
+          onPress={() => navigation.navigate("home")}
+        >
+          <Icon name="close" size={40} color="rgb(160, 90, 9)" />
+        </TouchableOpacity>
+      </View>
+      <View style={{ flex: 1 }}>
+        <GiftedChat
+          messages={messages}
+          showAvatarForEveryMessage={true}
+          onSend={(messages) => onSend(messages)}
+          user={{
+            _id: auth?.currentUser?.email,
+            name: auth?.currentUser?.displayName,
+            avatar: auth?.currentUser?.photoURL,
+          }}
+          renderInputToolbar={(props) => customtInputToolbar(props)}
+          renderSystemMessage={(props) => customSystemMessage(props)}
+          renderBubble={renderBubble}
+          alwaysShowSend={true}
+        />
+      </View>
+    </View>
   );
 }
 
@@ -826,7 +880,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   navbar: {
-    flex: 1,
+    flex: 0,
     flexDirection: "row",
     alignContent: "center",
     // justifyContent: "center",

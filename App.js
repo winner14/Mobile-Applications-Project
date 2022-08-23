@@ -11,7 +11,7 @@ import Register from "./screens/Register";
 import Landing from "./screens/Landing";
 import React from "react";
 import AppLoading from "expo-app-loading";
-import Chat from "./screens/Chat";
+import Chat from "./screens/Messaging/Chat";
 import Profile from "./screens/Profile";
 import Notifications from "./screens/Notifications";
 import Search from "./screens/Search";
