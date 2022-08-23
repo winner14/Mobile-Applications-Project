@@ -12,9 +12,9 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { firebaseConfig } from "../firebase-config";
-import Search from "../Search/Search";
-import Chat from "../Chat/Chat";
-import Profile from "../Profile/Profile";
+import Search from "./Search";
+import Chat from "./Chat";
+import Profile from "./Profile";
 
 export default function DrawerBar(props) {
   const app = initializeApp(firebaseConfig);

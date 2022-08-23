@@ -28,11 +28,11 @@ import {
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
 
-import bg2 from "../Login/bg2.jpg";
-import { logo } from "../../components/styles";
+import bg2 from "../assets/bg2.jpg";
+// import { logo } from "../components/styles";
 import { TextInput, Button } from "react-native-paper";
-import Register from "../Register/Register";
-import HomePage from "./HomePage";
+import Register from "../screens/Register";
+import HomePage from "../screens/HomePage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Login() {

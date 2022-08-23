@@ -5,16 +5,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 
-import HomePage from "./screens/Login/HomePage";
-import Login from "./screens/Login/Login";
-import Register from "./screens/Register/Register";
-import Landing from "./screens/Landing/Landing";
+import HomePage from "./screens/HomePage";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
+import Landing from "./screens/Landing";
 import React from "react";
 import AppLoading from "expo-app-loading";
-import Chat from "./screens/Chat/Chat";
-import Profile from "./screens/Profile/Profile";
-import Notifications from "./screens/Notifications/Notifications";
-import Search from "./screens/Search/Search";
+import Chat from "./screens/Chat";
+import Profile from "./screens/Profile";
+import Notifications from "./screens/Notifications";
+import Search from "./screens/Search";
 
 // import * as firebase from "firebase";
 // const firebaseConfig = {

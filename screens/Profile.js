@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/FontAwesome";
-import HomePage from "../Login/HomePage";
-import Notifications from "../Notifications/Notifications";
-import Search from "../Search/Search";
-import Chat from "../Chat/Chat";
+import HomePage from "./HomePage";
+import Notifications from "./Notifications";
+import Search from "./Search";
+import Chat from "./Chat";
 import { useNavigation } from "@react-navigation/native";
-import DrawerBar from "../Drawer/DrawerBar";
+import DrawerBar from "./DrawerBar";
 
 export default function Profile(props) {
   const [vNavModalOpen, setVNavModalOpen] = useState(false);

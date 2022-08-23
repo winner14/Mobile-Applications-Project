@@ -15,7 +15,7 @@ import { initializeApp } from "firebase/app";
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
-import DrawerBar from "../Drawer/DrawerBar";
+import DrawerBar from "./DrawerBar";
 
 const HomePage = (props) => {
   const [vNavModalOpen, setVNavModalOpen] = useState(false);
