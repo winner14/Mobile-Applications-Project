@@ -201,6 +201,7 @@ export default function Chat(props) {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages)
     );
+
     const { _id, createdAt, text, user } = messages[0];
 
     addDoc(collection(db, "chats"), { _id, createdAt, text, user });

@@ -23,6 +23,8 @@ import { useNavigation } from "@react-navigation/native";
 export default function Register(props) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [userId, setUserId] = React.useState("");
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const navigation = useNavigation();
@@ -38,7 +40,7 @@ export default function Register(props) {
   }, []);
 
   const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password, name)
       .then((userCredential) => {
         console.log("Account created");
         const user = userCredential.user;
@@ -88,6 +90,7 @@ export default function Register(props) {
             returnKeyType="next"
             returnKeyLabel="next"
             style={styles.input_box}
+            onChangeText={(text) => setName(text)}
           />
         </View>
         <View>
