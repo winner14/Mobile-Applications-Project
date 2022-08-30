@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     height: "100%",
     // borderTopLeftRadius: 20,
     // borderBottomLeftRadius: 40,
-    marginTop: 60,
+    paddingTop: 50,
   },
   profileName: {
     margin: 10,

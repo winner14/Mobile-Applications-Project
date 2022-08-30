@@ -35,6 +35,7 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
+import { chatName } from "./ChatList";
 
 export default function Chat(props) {
   const [messages, setMessages] = useState([]);
@@ -179,8 +180,9 @@ export default function Chat(props) {
     );
   };
 
+  const chatRoom = props.name;
   useLayoutEffect(() => {
-    const q = query(collection(db, "chats"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, chatName), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) =>
       setMessages(
         snapshot.docs.map((doc) => ({
@@ -204,7 +206,12 @@ export default function Chat(props) {
 
     const { _id, createdAt, text, user } = messages[0];
 
-    addDoc(collection(db, "chats"), { _id, createdAt, text, user });
+    addDoc(collection(db, chatName), {
+      _id,
+      createdAt,
+      text,
+      user,
+    });
   }, []);
   return (
     <View style={styles.bg}>
@@ -232,7 +239,7 @@ export default function Chat(props) {
             // alignContent: "center",
             // justifyContent: "center",
           }}
-          onPress={() => navigation.navigate("home")}
+          onPress={() => navigation.navigate("chatList")}
         >
           <Icon name="close" size={40} color="rgb(160, 90, 9)" />
         </TouchableOpacity>

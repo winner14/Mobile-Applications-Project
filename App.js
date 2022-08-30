@@ -93,7 +93,7 @@ export default function App() {
           />
           <Stack.Screen
             options={{ headerShown: false }}
-            name="chatkk"
+            name="chatList"
             component={ChatList}
           />
           <Stack.Screen
@@ -130,7 +130,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "rgb(238, 218, 202)",
     // alignItems: "center",
     // justifyContent: "center",
   },

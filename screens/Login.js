@@ -149,7 +149,7 @@ export default function Login() {
                   />
                 }
                 icon="person"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
                 autoCapitalize="none"
                 autoCompleteType="email"
                 keyboardType="email-address"

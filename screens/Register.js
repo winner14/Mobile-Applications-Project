@@ -24,7 +24,6 @@ export default function Register(props) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [name, setName] = React.useState("");
-  const [userId, setUserId] = React.useState("");
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const navigation = useNavigation();
@@ -40,10 +39,11 @@ export default function Register(props) {
   }, []);
 
   const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, email, password, name)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Account created");
         const user = userCredential.user;
+        navigation.navigate("home");
         console.log(user);
       })
       .catch((error) => alert.message);

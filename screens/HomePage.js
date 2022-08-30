@@ -60,7 +60,7 @@ const HomePage = (props) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{ flex: 0, margin: 5 }}
+          // style={{ flex: 0, margin: 5 }}
           onPress={() => setVNavModalOpen(true)}
         >
           <Icon name="navicon" size={45} color="rgb(160, 90, 9)" />
@@ -474,7 +474,7 @@ const HomePage = (props) => {
             name="envelope-o"
             size={35}
             color="rgb(160, 90, 9)"
-            onPress={() => navigation.navigate("chat")}
+            onPress={() => navigation.navigate("chatList")}
           />
         </TouchableOpacity>
       </View>
@@ -502,7 +502,7 @@ const styles = StyleSheet.create({
     height: "10%",
     // borderBottomLeftRadius: 10,
     // borderBottomRightRadius: 10,
-    paddingTop: 15,
+    paddingTop: 20,
     paddingLeft: 8,
     paddingRight: 8,
     // paddingBottom: 5,
