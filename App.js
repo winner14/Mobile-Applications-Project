@@ -16,6 +16,7 @@ import Profile from "./screens/Profile";
 import Notifications from "./screens/Notifications";
 import Search from "./screens/Search";
 import ChatList from "./screens/Messaging/ChatList";
+import Match from "./screens/Match";
 
 // import * as firebase from "firebase";
 // const firebaseConfig = {
@@ -82,7 +83,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
             name="login"
             component={Login}
           />
@@ -97,24 +98,29 @@ export default function App() {
             component={ChatList}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
             name="chat"
             component={Chat}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
             name="profile"
             component={Profile}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
             name="notifications"
             component={Notifications}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: false }}
             name="search"
             component={Search}
+          />
+          <Stack.Screen
+            options={{ headerShown: false, gestureEnabled: false }}
+            name="match"
+            component={Match}
           />
           {/* <Stack.Screen
             options={{ headerShown: false }}

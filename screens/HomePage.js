@@ -450,7 +450,7 @@ const HomePage = (props) => {
             name="search"
             size={35}
             color="rgb(160, 90, 9)"
-            onPress={() => navigation.navigate("search")}
+            onPress={() => navigation.navigate("match")}
           />
         </TouchableOpacity>
         <TouchableOpacity style={{ flex: 1 }}>

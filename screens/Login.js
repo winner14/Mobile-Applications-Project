@@ -18,8 +18,6 @@ import { useNavigation } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 import Icon from "react-native-vector-icons/FontAwesome";
-// import { auth } from "../firebase";
-// import * as firebase from "firebase";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -29,7 +27,6 @@ import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
 
 import bg2 from "../assets/bg2.jpg";
-// import { logo } from "../components/styles";
 import { TextInput, Button } from "react-native-paper";
 import Register from "../screens/Register";
 import HomePage from "../screens/HomePage";
@@ -44,6 +41,9 @@ export default function Login() {
   const [password, setPassword] = React.useState("");
   const navigation = useNavigation();
 
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -54,24 +54,6 @@ export default function Login() {
     return unsubscribe;
   }, []);
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // const handleCreateAccount = () => {
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       console.log("Account created");
-  //       const user = userCredential.user;
-  //       console.log(user);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       Alert.alert(error.message);
-  //     });
-  // };
-
-  const invalidLogin = "Invalid login details";
-
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -81,8 +63,8 @@ export default function Login() {
         <HomePage />;
       })
       .catch((error) => {
-        console.log(invalidLogin);
-        Alert.alert(invalidLogin);
+        console.log("Incorrect Email or Password");
+        Alert.alert("Incorrect Email or Password");
       });
   };
 
@@ -224,13 +206,9 @@ export default function Login() {
               </Text>
               <View
                 style={{
-                  // backgroundColor: "rgba(189, 118, 59, 0.327)",
                   alignContent: "center",
                   justifyContent: "center",
                   marginLeft: 8,
-                  // borderRadius: 5,
-                  // borderWidth: 1.5,
-                  // borderColor: "rgba(85, 41, 5, 0.849)",
                 }}
               >
                 <Text
@@ -253,7 +231,6 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   bg: {
-    // flex: 1,
     backgroundColor: "rgba(243, 237, 232, 0.4)",
   },
   bg_image: {
@@ -275,8 +252,6 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 25,
     paddingTop: 25,
-    // top: 75,
-    // flex: 0.7,
     alignItems: "center",
     justifyContent: "center",
   },
