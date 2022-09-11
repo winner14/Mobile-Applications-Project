@@ -1,4 +1,5 @@
 import {
+  FlatList,
   Image,
   Modal,
   ScrollView,
@@ -16,9 +17,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DrawerBar from "./DrawerBar";
+import { posts } from "../Data";
 
 const HomePage = (props) => {
   const [vNavModalOpen, setVNavModalOpen] = useState(false);
+  const thisPosts = posts;
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -30,8 +33,97 @@ const HomePage = (props) => {
     });
   };
 
-  const added = 0;
-  const going = 0;
+  var [like, setLike] = useState(0);
+  var [dislike, setDislike] = useState(0);
+  var [going, setGoing] = useState(0);
+
+  const onePost = ({ item }) => (
+    <View>
+      <View style={styles.postContainer}>
+        <View style={styles.imgName}>
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <TouchableOpacity style={styles.profileImage}>
+              <Image
+                source={item.userProfile}
+                style={styles.image}
+                resizeMode="cover"
+              ></Image>
+            </TouchableOpacity>
+            <View style={{ paddingLeft: 5, paddingTop: 6 }}>
+              <Text style={{ fontSize: 20 }}>{item.username}</Text>
+              <Text style={{ color: "rgba(32, 21, 9, 0.465)" }}>
+                {item.postType} || {item.time}
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity style={{ flex: 0, marginRight: 18 }}>
+            <Icon name="ellipsis-v" size={25} color="rgb(160, 90, 9)" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.caption}>
+          <Text>{item.caption}</Text>
+        </View>
+        <TouchableOpacity style={styles.postImg}>
+          <Image
+            source={item.img}
+            style={styles.imagePost}
+            resizeMode="cover"
+          />
+        </TouchableOpacity>
+        <View style={styles.actions}>
+          <TouchableOpacity
+            style={{ flex: 1, flexDirection: "row" }}
+            onPress={() => setLike(like++)}
+          >
+            <Icon name="arrow-up" size={20} color="rgb(160, 90, 9)" />
+            <Text
+              style={{
+                margin: 2,
+                fontWeight: "bold",
+                textTransform: "uppercase",
+              }}
+            >
+              Like {like}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ flex: 1, flexDirection: "row" }}
+            onPress={() => setDislike(dislike++)}
+          >
+            <Icon name="arrow-down" size={20} color="rgb(160, 90, 9)" />
+            <Text
+              style={{
+                margin: 2,
+                fontWeight: "bold",
+                textTransform: "uppercase",
+              }}
+            >
+              Dislike {dislike}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ flex: 0, flexDirection: "row", marginRight: 10 }}
+          >
+            <Icon
+              name="heart"
+              size={20}
+              color="rgb(160, 90, 9)"
+              onPress={() => setGoing(going++)}
+            />
+            <Text
+              style={{
+                margin: 2,
+                fontWeight: "bold",
+                textTransform: "uppercase",
+              }}
+            >
+              Going {going}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.home_bg}>
@@ -68,377 +160,7 @@ const HomePage = (props) => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.feed}>
-          <View style={styles.postContainer}>
-            <View style={styles.imgName}>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <TouchableOpacity style={styles.profileImage}>
-                  <Image
-                    source={require("../assets/prof.jpg")}
-                    style={styles.image}
-                    resizeMode="cover"
-                  ></Image>
-                </TouchableOpacity>
-                <View style={{ paddingLeft: 5, paddingTop: 6 }}>
-                  <Text style={{ fontSize: 20 }}>Winner</Text>
-                  <Text style={{ color: "rgba(32, 21, 9, 0.465)" }}>
-                    Public || 30mins ago
-                  </Text>
-                </View>
-              </View>
-              <TouchableOpacity style={{ flex: 0, marginRight: 18 }}>
-                <Icon
-                  name="ellipsis-v"
-                  size={25}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.caption}>
-              <Text>
-                Come with me to the Grace crusade this Sunday and be blessed 😇
-              </Text>
-            </View>
-            <TouchableOpacity style={styles.postImg}>
-              <Image
-                source={require("../assets/church.jpg")}
-                style={styles.imagePost}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <View style={styles.actions}>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="plus"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  onPress={() => added++}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Add Event ({added})
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="smile-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  onPress={() => going++}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Going ({going})
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 0, flexDirection: "row" }}>
-                <Icon
-                  name="clock-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Remind Me
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.postContainer}>
-            <View style={styles.imgName}>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <TouchableOpacity style={styles.profileImage}>
-                  <Image
-                    source={require("../assets/prof.jpg")}
-                    style={styles.image}
-                    resizeMode="cover"
-                  ></Image>
-                </TouchableOpacity>
-                <View style={{ paddingLeft: 5, paddingTop: 6 }}>
-                  <Text style={{ fontSize: 20 }}>Winner</Text>
-                  <Text style={{ color: "rgba(32, 21, 9, 0.465)" }}>
-                    Public || 2hours ago
-                  </Text>
-                </View>
-              </View>
-              <TouchableOpacity style={{ flex: 0, marginRight: 18 }}>
-                <Icon
-                  name="ellipsis-v"
-                  size={25}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.caption}>
-              <Text>
-                Exams is just around the corner. Please come with me to the
-                tutorial at the library tomorrow
-              </Text>
-            </View>
-            <TouchableOpacity style={styles.postImg}>
-              <Image
-                source={require("../assets/library.jpg")}
-                style={styles.imagePost}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <View style={styles.actions}>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="plus"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Add Event
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="smile-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Going
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 0, flexDirection: "row" }}>
-                <Icon
-                  name="clock-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Remind Me
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.postContainer}>
-            <View style={styles.imgName}>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <TouchableOpacity style={styles.profileImage}>
-                  <Image
-                    source={require("../assets/prof.jpg")}
-                    style={styles.image}
-                    resizeMode="cover"
-                  ></Image>
-                </TouchableOpacity>
-                <View style={{ paddingLeft: 5, paddingTop: 6 }}>
-                  <Text style={{ fontSize: 20 }}>Winner</Text>
-                  <Text style={{ color: "rgba(32, 21, 9, 0.465)" }}>
-                    Public || 3days ago
-                  </Text>
-                </View>
-              </View>
-              <TouchableOpacity style={{ flex: 0, marginRight: 18 }}>
-                <Icon
-                  name="ellipsis-v"
-                  size={25}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.caption}>
-              <Text>
-                Hey boys and girls, forget exams. Party dey town this Friday.
-                Come let's chill. #YOLO😜
-              </Text>
-            </View>
-            <TouchableOpacity style={styles.postImg}>
-              <Image
-                source={require("../assets/club.jpg")}
-                style={styles.imagePost}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <View style={styles.actions}>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="plus"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Add Event
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="smile-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Going
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 0, flexDirection: "row" }}>
-                <Icon
-                  name="clock-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Remind Me
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.postContainer}>
-            <View style={styles.imgName}>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <TouchableOpacity style={styles.profileImage}>
-                  <Image
-                    source={require("../assets/prof.jpg")}
-                    style={styles.image}
-                    resizeMode="cover"
-                  ></Image>
-                </TouchableOpacity>
-                <View style={{ paddingLeft: 5, paddingTop: 6 }}>
-                  <Text style={{ fontSize: 20 }}>Winner</Text>
-                  <Text style={{ color: "rgba(32, 21, 9, 0.465)" }}>
-                    Public || 4days ago
-                  </Text>
-                </View>
-              </View>
-              <TouchableOpacity style={{ flex: 0, marginRight: 18 }}>
-                <Icon
-                  name="ellipsis-v"
-                  size={25}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.caption}>
-              <Text>
-                My birthday is this Saturday. Who would like to go on a date
-                with me 👉👈😩
-              </Text>
-            </View>
-            <TouchableOpacity style={styles.postImg}>
-              <Image
-                source={require("../assets/date.jpg")}
-                style={styles.imagePost}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <View style={styles.actions}>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="plus"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Add Event
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 1, flexDirection: "row" }}>
-                <Icon
-                  name="smile-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Going
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ flex: 0, flexDirection: "row" }}>
-                <Icon
-                  name="clock-o"
-                  size={20}
-                  color="rgb(160, 90, 9)"
-                  // onPress={() => setProfileModalOpen(true)}
-                />
-                <Text
-                  style={{
-                    margin: 2,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Remind Me
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <FlatList data={thisPosts} renderItem={onePost} />
         </View>
       </ScrollView>
       <View style={styles.footer}>
@@ -487,33 +209,25 @@ export default HomePage;
 const styles = StyleSheet.create({
   home_bg: {
     flex: 1,
-    // flexDirection: "row",
     backgroundColor: "rgba(243, 237, 232, 0.4)",
     width: "100%",
     height: "100%",
   },
   navbar: {
-    // flex: 1,
     flexDirection: "row",
-    // alignContent: "center",
-    // justifyContent: "center",
     backgroundColor: "rgb(238, 218, 202)",
     width: "100%",
-    height: "10%",
-    // borderBottomLeftRadius: 10,
-    // borderBottomRightRadius: 10,
+    height: 70,
     paddingTop: 20,
     paddingLeft: 8,
     paddingRight: 8,
-    // paddingBottom: 5,
     marginBottom: 1,
   },
   feed: {
     flex: 1,
     height: "100%",
     width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    alignContent: "center",
     margin: 4,
   },
   postContainer: {
@@ -525,22 +239,7 @@ const styles = StyleSheet.create({
     height: 350,
     padding: 4,
     marginBottom: 3,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    // zIndex: 99,
-    // elevation: 16,
   },
-  // postContainerAndroid: {
-  //   backgroundColor: "rgba(247, 245, 243",
-  //   borderRadius: 20,
-  //   height: 3000,
-  //   padding: 4,
-  // },
   imgName: {
     flexDirection: "row",
   },
@@ -557,7 +256,6 @@ const styles = StyleSheet.create({
     width: undefined,
   },
   imagePost: {
-    // flex: 1,
     height: 210,
     width: "100%",
     borderRadius: 8,
@@ -582,14 +280,13 @@ const styles = StyleSheet.create({
     width: "99%",
     padding: 5,
     flexDirection: "row",
+    marginLeft: 5,
+    marginRight: 5,
   },
   footer: {
-    // flex: 1,
     flexDirection: "row",
     alignContent: "center",
     alignSelf: "flex-end",
-    // alignContent: "center",
-    // justifyContent: "center",
     backgroundColor: "rgb(238, 218, 202)",
     width: "100%",
     height: "8%",
@@ -598,6 +295,5 @@ const styles = StyleSheet.create({
     paddingTop: 7,
     paddingLeft: 8,
     paddingRight: 8,
-    // paddingBottom: 5,
   },
 });

@@ -1,20 +1,9 @@
-import {
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { useState } from "react";
-
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 import { firebaseConfig } from "../firebase-config";
-import Search from "./Search";
-import Chat from "./Messaging/Chat";
-import Profile from "./Profile";
+import { useEffect, useState } from "react";
 
 export default function DrawerBar(props) {
   const app = initializeApp(firebaseConfig);
@@ -26,11 +15,40 @@ export default function DrawerBar(props) {
     });
   };
 
-  const [profileModalOpen, setProfileModalOpen] = useState(false);
-  //   const [notifyModalOpen, setNotifyModalOpen] = useState(false);
-  const [chatModalOpen, setChatModalOpen] = useState(false);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [vNavModalOpen, setVNavModalOpen] = useState(false);
+  var [data, setData] = useState({});
+
+  useEffect(() => {
+    let dataArray = [
+      {
+        Id: "pkTHtmnWjWMvnDSfqTruVBjWEZx2",
+        name: "Kpodo Winner",
+        username: "meet.winner",
+        gender: "Male",
+        course: "Computer Science",
+        profilePhoto: require("../assets/winner.jpg"),
+        bio: '"Here for fun and to make friends. Feel free to add me"',
+        interests: ["Gaming", "Reading", "Travelling"],
+        events: 25,
+        followers: 1205,
+        friends: 178,
+      },
+      {
+        Id: "t4KNqWmVcOZ3x6Sepvov55LHl2y2",
+        name: "Mabel",
+        username: "mabelll",
+        gender: "Female",
+        course: "Computer Engineering",
+        profilePhoto: require("../assets/mabel.jpeg"),
+        bio: "",
+        interests: ["Dancing", "Movies", "Travelling"],
+        events: 10,
+        followers: 3000,
+        friends: 30,
+      },
+    ];
+    data = dataArray.find((e) => e.Id == auth.currentUser.uid);
+    setData(data);
+  }, []);
 
   return (
     <View style={styles.bg}>
@@ -40,23 +58,23 @@ export default function DrawerBar(props) {
           <View style={styles.profileName}>
             <TouchableOpacity style={styles.profileImage}>
               <Image
-                source={require("../assets/prof.jpg")}
+                source={data.profilePhoto}
                 style={styles.image}
                 resizeMode="cover"
               ></Image>
             </TouchableOpacity>
             <View style={styles.infoContainer}>
               <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-                Winner
+                {data.name}
               </Text>
               <Text style={[styles.text, { fontWeight: "200", fontSize: 18 }]}>
-                Computer Science
+                {data.course}
               </Text>
             </View>
           </View>
           <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
-              <Text style={[styles.text, { fontSize: 21 }]}>50</Text>
+              <Text style={[styles.text, { fontSize: 21 }]}>{data.events}</Text>
               <Text style={[styles.text, styles.subText]}>Events</Text>
             </View>
             <View
@@ -69,11 +87,15 @@ export default function DrawerBar(props) {
                 },
               ]}
             >
-              <Text style={[styles.text, { fontSize: 21 }]}>8563</Text>
+              <Text style={[styles.text, { fontSize: 21 }]}>
+                {data.followers}
+              </Text>
               <Text style={[styles.text, styles.subText]}>Followers</Text>
             </View>
             <View style={styles.statsBox}>
-              <Text style={[styles.text, { fontSize: 21 }]}>240</Text>
+              <Text style={[styles.text, { fontSize: 21 }]}>
+                {data.friends}
+              </Text>
               <Text style={[styles.text, styles.subText]}>Friends</Text>
             </View>
           </View>
@@ -101,7 +123,7 @@ export default function DrawerBar(props) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.drawAction}
-              onPress={() => navigation.navigate("chat")}
+              onPress={() => navigation.navigate("chatList")}
             >
               <Text style={{ fontSize: 18, fontWeight: "400" }}>Messages</Text>
             </TouchableOpacity>

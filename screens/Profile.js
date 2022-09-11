@@ -15,6 +15,7 @@ import DrawerBar from "./DrawerBar";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
 import { getAuth } from "firebase/auth";
+import { userData } from "../Data";
 
 export default function Profile(props) {
   const [vNavModalOpen, setVNavModalOpen] = useState(false);
@@ -22,281 +23,42 @@ export default function Profile(props) {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  const [data, setData] = useState({});
-
-  const userId = auth.currentUser.uid;
+  var [data, setData] = useState({});
 
   useEffect(() => {
     let dataArray = [
       {
-        Id: "CX57HWBexMQhtXgrMEOPAHLX4pb2",
+        Id: "pkTHtmnWjWMvnDSfqTruVBjWEZx2",
         name: "Kpodo Winner",
         username: "meet.winner",
+        gender: "Male",
         course: "Computer Science",
-        profilePhoto: "",
+        profilePhoto: require("../assets/winner.jpg"),
         bio: '"Here for fun and to make friends. Feel free to add me"',
+        interests: ["Gaming", "Reading", "Travelling"],
         events: 25,
         followers: 1205,
         friends: 178,
       },
       {
-        Id: "pHxFg4QNuPS5AqcEXYc228SXlXy2",
-        name: "Nana Agyemang",
-        username: "nana10",
-        course: "Computer Science",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "m5OqpcsZpTfXJFi6JPUe96KojT72",
-        name: "Worla",
-        username: "nworla_xx",
-        course: "Chemical Enginnering",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "FEjKhQ9bz3YZS4eFjvURn59rrfo2",
-        name: "MR. Baah",
-        username: "_baah",
-        course: "Environmental Science",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "sEP2v3q29GdQV5Ftu0j8vEdNvrt1",
+        Id: "t4KNqWmVcOZ3x6Sepvov55LHl2y2",
         name: "Mabel",
         username: "mabelll",
+        gender: "Female",
         course: "Computer Engineering",
-        profilePhoto: "",
+        profilePhoto: require("../assets/mabel.jpeg"),
         bio: "",
+        interests: ["Dancing", "Movies", "Travelling"],
         events: 10,
         followers: 3000,
         friends: 30,
       },
-      {
-        Id: "5",
-        name: "Obaapa Serwaa",
-        username: "serwaaxx",
-        course: "Fashion and Design",
-        profilePhoto: "",
-        bio: "",
-        events: 40,
-        followers: 2980,
-        friends: 45,
-      },
-      {
-        Id: "6",
-        name: "Abraham",
-        username: "father_AB",
-        course: "Chinese",
-        profilePhoto: "",
-        bio: "",
-        events: 300,
-        followers: 1087,
-        friends: 90,
-      },
-      {
-        Id: "Jrm1Yww89UMFl4BpVjCWiRv1Eg93",
-        name: "Aaron",
-        username: "aaron",
-        course: "Literature",
-        profilePhoto: "",
-        bio: "",
-        events: 20,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "8",
-        name: "MR. Agyapong",
-        username: "agyapong",
-        course: "Environmental Science",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "mLrZD7uC1lM341JRjlQq5jUMwNJ2",
-        name: "Elorm Ella",
-        username: "elorm.e",
-        course: "Petroleum Engineering",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 4000,
-        friends: 178,
-      },
-      {
-        Id: "ORq4Crm54sSXQ8Z729qPo4hjpFv2",
-        name: "Godfriend",
-        username: "goddey",
-        course: "Mathematics",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 3205,
-        friends: 168,
-      },
-      {
-        Id: "iy58nSPjX1SjcAbtnLAhQymSYyv2",
-        name: "Azu Joshua",
-        username: "_subway",
-        course: "Pharmacy",
-        profilePhoto: "",
-        bio: "",
-        events: 15,
-        followers: 5205,
-        friends: 18,
-      },
-      {
-        Id: "zqGaB4ahauhUfwbs6LlMI7iIwji2",
-        name: "Kelvin",
-        username: "savage",
-        course: "Business Administraton",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "0uZRvgU6nANqpQOs7ollhJW2syf2",
-        name: "Tiana",
-        username: "tiana_xx",
-        course: "Marine Engineering",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "UjPX0Qg6OJZm0Z0HJD77d0LiWPz1",
-        name: "Nadine",
-        username: "ms_nadine",
-        course: "Arts",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "15",
-        name: "Francis",
-        username: "franc_",
-        course: "Environmental Science",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "16",
-        name: "Nicholas",
-        username: "fanta",
-        course: "Electrical Engieering",
-        profilePhoto: "",
-        bio: "",
-        events: 45,
-        followers: 6005,
-        friends: 18,
-      },
-      {
-        Id: "17",
-        name: "Bless",
-        username: "_blessed",
-        course: "Physics",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "18",
-        name: "Eddy",
-        username: "_ed",
-        course: "Environmental Science",
-        profilePhoto: "",
-        bio: "",
-        events: 25,
-        followers: 1205,
-        friends: 178,
-      },
-      {
-        Id: "19",
-        name: "Kwame Young",
-        username: "kwame_y",
-        course: "Political Science",
-        profilePhoto: "",
-        bio: "",
-        events: 5,
-        followers: 55,
-        friends: 78,
-      },
-      {
-        Id: "20",
-        name: "Allan Jackson",
-        username: "AJ",
-        course: "Graphic Design",
-        profilePhoto: "",
-        bio: "",
-        events: 59,
-        followers: 5235,
-        friends: 78,
-      },
-      {
-        Id: "21",
-        name: "Nana Ama",
-        username: "dr.ama",
-        course: "Doctor of Optometry",
-        profilePhoto: "",
-        bio: "",
-        events: 5,
-        followers: 3455,
-        friends: 378,
-      },
-      {
-        Id: "22",
-        name: "David Baah",
-        username: "coder",
-        course: "Computer Science",
-        profilePhoto: "",
-        bio: "",
-        events: 5,
-        followers: 55,
-        friends: 78,
-      },
-      {
-        Id: "23",
-        name: "Jack Jackson",
-        username: "jack_jack",
-        course: "Biological Science",
-        profilePhoto: "",
-        bio: "",
-        events: 65,
-        followers: 285,
-        friends: 378,
-      },
     ];
-    let data = dataArray.find((e) => e.Id == userId);
+    data = dataArray.find((e) => e.Id == auth.currentUser.uid);
     setData(data);
   }, []);
 
+  console.log(data.name);
   return (
     <View style={styles.container}>
       <Modal visible={vNavModalOpen} animationType="" transparent>
@@ -314,7 +76,7 @@ export default function Profile(props) {
         >
           <TouchableOpacity style={styles.profileImage}>
             <Image
-              source={require("../assets/prof.jpg")}
+              source={data.profilePhoto}
               style={styles.image}
               resizeMode="cover"
             ></Image>

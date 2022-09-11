@@ -3,26 +3,18 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   ImageBackground,
   Modal,
   KeyboardAvoidingView,
   Alert,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 
-import AppLoading from "expo-app-loading";
-import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
 
@@ -34,8 +26,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Login() {
   const [modalOpen, setModalOpen] = useState(false);
-
-  const edges = useSafeAreaInsets();
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -113,7 +103,9 @@ export default function Login() {
             Search ~ Meet ~ Connect
           </Text>
         </View>
-        <KeyboardAvoidingView behavior="padding">
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <View style={styles.login_register}>
             <View
               style={{ paddingHorizontal: 25, marginBottom: 10, width: "100%" }}
