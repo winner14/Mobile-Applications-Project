@@ -778,7 +778,7 @@ export default function Notifications(props) {
         </TouchableOpacity>
         <TouchableOpacity
           style={{ flex: 0 }}
-          onPress={() => navigation.navigate("chat")}
+          onPress={() => navigation.navigate("chatList")}
         >
           <Icon name="envelope-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>

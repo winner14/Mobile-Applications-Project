@@ -390,29 +390,23 @@ export default function Search(props) {
         <TouchableOpacity style={{ flex: 1 }}>
           <Icon name="search" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1 }}>
-          <Icon
-            name="user-circle"
-            size={35}
-            color="rgb(160, 90, 9)"
-            onPress={() => navigation.navigate("profile")}
-          />
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => navigation.navigate("profile")}
+        >
+          <Icon name="user-circle" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 1 }}>
-          <Icon
-            name="bell-o"
-            size={35}
-            color="rgb(160, 90, 9)"
-            onPress={() => navigation.navigate("notifications")}
-          />
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          onPress={() => navigation.navigate("notifications")}
+        >
+          <Icon name="bell-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flex: 0 }}>
-          <Icon
-            name="envelope-o"
-            size={35}
-            color="rgb(160, 90, 9)"
-            onPress={() => navigation.navigate("chat")}
-          />
+        <TouchableOpacity
+          style={{ flex: 0 }}
+          onPress={() => navigation.navigate("chatList")}
+        >
+          <Icon name="envelope-o" size={35} color="rgb(160, 90, 9)" />
         </TouchableOpacity>
       </View>
     </View>

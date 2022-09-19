@@ -16,12 +16,11 @@ import { userData } from "../Data";
 import { firebaseConfig } from "../firebase-config";
 import MatchModal from "./MatchModal";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-// console.log(auth.currentUser.email);
-const data = userData.filter((e) => e.Id != auth.currentUser.uid);
-
 export default function Match() {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const data = userData.filter((e) => e.Id != auth.currentUser.uid);
+
   const navigation = useNavigation();
   const [matchModalOpen, setMatchModalOpen] = useState(false);
 

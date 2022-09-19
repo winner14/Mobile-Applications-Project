@@ -19,7 +19,7 @@ export default function MatchModal(props) {
             marginBottom: 10,
           }}
         >
-          Pair Generated!
+          It's a match!
         </Text>
         <Text
           style={{
@@ -27,7 +27,7 @@ export default function MatchModal(props) {
             fontWeight: "300",
           }}
         >
-          You and {props.name} share similar interests.
+          You both share similar interests.
         </Text>
         <Text
           style={{
@@ -37,7 +37,7 @@ export default function MatchModal(props) {
             alignItems: "center",
           }}
         >
-          Get to know them by texting them now 🥂
+          Get to know each other in chat them now 🥂
         </Text>
         <TouchableOpacity
           style={styles.chatBtn}

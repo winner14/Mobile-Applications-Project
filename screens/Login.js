@@ -191,7 +191,7 @@ export default function Login() {
             </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: "row" }}
-              onPress={() => setModalOpen(true)}
+              // onPress={() => setModalOpen(true)}  Disabled for now. Check the Data.js file for credentials of dummy users.
             >
               <Text style={{ fontSize: 16, fontWeight: "bold" }}>
                 New User?

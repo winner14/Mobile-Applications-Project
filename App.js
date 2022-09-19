@@ -93,7 +93,7 @@ export default function App() {
             component={HomePage}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{ headerShown: false, gestureEnabled: true }}
             name="chatList"
             component={ChatList}
           />

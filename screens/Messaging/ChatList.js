@@ -6,7 +6,6 @@ import {
   Image,
   FlatList,
 } from "react-native";
-// import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebase-config";
