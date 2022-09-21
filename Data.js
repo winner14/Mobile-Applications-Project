@@ -19,7 +19,7 @@ export const userData = [
     name: "Mabel",
     username: "mabelll",
     email: "girl@gmail.com",
-    password: "1111111",
+    password: "1234567",
     gender: "Female",
     course: "Computer Engineering",
     profilePhoto: require("./assets/mabel.jpeg"),
