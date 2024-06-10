@@ -58,14 +58,6 @@ export default function Login() {
       });
   };
 
-  // let [fontsLoaded] = useFonts({
-  //   Inter_900Black,
-  // });
-
-  // if (!fontsLoaded) {
-  //   return <AppLoading />;
-  // }
-
   return (
     <View style={styles.bg}>
       <ImageBackground source={bg2} style={styles.bg_image}>
